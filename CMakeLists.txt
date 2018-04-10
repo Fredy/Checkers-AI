@@ -4,4 +4,6 @@ project(checkers)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(checkers main.cpp
-               chekersGame.cpp chekersGame.hpp)
+        checkersMinMax.cpp checkersMinMax.hpp
+        stateCounter.cpp stateCounter.hpp
+        types.hpp)
