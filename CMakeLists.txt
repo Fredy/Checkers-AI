@@ -5,5 +5,5 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(checkers main.cpp
         checkersMinMax.cpp checkersMinMax.hpp
-        stateCounter.cpp stateCounter.hpp
-        types.hpp)
+        types.hpp
+        node.cpp node.hpp)
