@@ -100,6 +100,7 @@ deque<Move> Node::generatePlayerMoves(const GameBoard &gameBoard, Player player,
   deque<Move> genMoves;
   for (size_t i = 0; i < gameBoard.size(); i++) {
     for (size_t j = 0; j < gameBoard.at(0).size(); j++) {
+
       if (gameBoard[i][j] == player) {
         int checkLeft =
             checkSquare(gameBoard, i + movLeft[0], j + movLeft[1], player);
@@ -135,7 +136,7 @@ deque<Move> Node::generatePlayerMoves(const GameBoard &gameBoard, Player player,
 
 int Node::checkSquare(const GameBoard &gameBoard, SmallInt row, SmallInt col,
                       Player playerTurn) {
-  if (row < 0 or row >= 8 or col < 0 or row >= 8) {
+  if (row < 0 or row >= 8 or col < 0 or col >= 8) {
     return 0;
   }
   if (gameBoard[row][col] == playerTurn) {

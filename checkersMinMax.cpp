@@ -60,30 +60,27 @@ deque<Node> CheckersMinMax::buildTree(const GameBoard &gameBoard,
   arrayTree.front().setFirstChildIndex(1);
   arrayTree.front().setNumberChilds(possibleMoves.size());
 
-  size_t parentIndex = 0;
-
   for (const auto &move : possibleMoves) {
-    arrayTree.emplace_back(1, arrayTree.front().getMoves(), move);
-    arrayTree.back().setParentIndex(parentIndex);
+    arrayTree.emplace_back(1, arrayTree[0].getMoves(), move);
+    arrayTree.back().setParentIndex(0);
   }
 
-  auto firstChildOfLevel = arrayTree.begin() + 1;
-  auto lastChildOfLevel = arrayTree.end() - 1;
+  size_t firstChildOfLevel = 1; // begin + 1
+  size_t lastChildOfLevel = arrayTree.size() - 1; // end - 1
 
   for (size_t i = 1; i < treeLevels - 1; i++) {
-    for (; firstChildOfLevel <= lastChildOfLevel; firstChildOfLevel++) {
-      possibleMoves = firstChildOfLevel->generateChildMoves(gameBoard, 0);
-      firstChildOfLevel->setFirstChildIndex(arrayTree.size());
-      firstChildOfLevel->setNumberChilds(possibleMoves.size());
+    for (size_t j = firstChildOfLevel; j <= lastChildOfLevel; j++) {
+      possibleMoves = arrayTree[j].generateChildMoves(gameBoard, 0);
+      arrayTree[j].setFirstChildIndex(arrayTree.size());
+      arrayTree[j].setNumberChilds(possibleMoves.size());
 
-      parentIndex = firstChildOfLevel - arrayTree.begin();
       for (const auto &move : possibleMoves) {
-        arrayTree.emplace_back(i + 1, arrayTree.front().getMoves(), move);
-        arrayTree.back().setParentIndex(parentIndex);
+        arrayTree.emplace_back(i + 1, arrayTree[j].getMoves(), move);
+        arrayTree.back().setParentIndex(j);
       }
     }
     firstChildOfLevel = lastChildOfLevel + 1;
-    lastChildOfLevel = arrayTree.end() - 1;
+    lastChildOfLevel = arrayTree.size() - 1;
   }
   return arrayTree;
 }
